@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Homepage</title>
+    <div th:replace="fragments :: header"/>
+</head>
+
+<body style="background-color:#EDF1FF">
+
+<div th:replace="fragments :: navigation"></div>
+
+<div align="center">
+    <h1>
+        Hello and welcome to Gregory page
+    </h1>
+
+
+    <h4>
+        Please, create an account to get full access to the tests.
+
+    </h4>
+
+</div>
+
+<div class="registration-form">
+    <h2>Register</h2>
+    <form th:action="@{/register}" method="post">
+        <div class="form-group">
+            <label for="username">Name-o:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+<!--        <div class="form-group">-->
+<!--            <label for="email">Email:</label>-->
+<!--            <input type="email" id="email" name="email" required>-->
+<!--        </div>-->
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <button type="submit">Register</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

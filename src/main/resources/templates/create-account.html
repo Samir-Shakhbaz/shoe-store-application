@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create New Account</title>
+    <div th:replace="fragments :: header"/>
+</head>
+
+<body style="background-color:#EDF1FF">
+
+<div th:replace="fragments :: navigation"></div>
+<div align="center">
+    <h1>Create New Account</h1>
+    <br/>
+    <!--
+    Here is the form that will be used to save the new user.
+    The form is tied to the User object added to the model,
+    and on submit it will hit the /save endpoint using the POST method.
+    -->
+    <form action="#" th:action="@{/register}" th:object="${user}" method="post">
+        <!--
+        These input fields are used to collect the information
+        required to complete the referenced Customer object.
+        -->
+        <table border="0" cellpadding="10">
+            <tr>
+                <td>User name:</td>
+                <td><input type="text" th:field="*{username}" required/></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="text" th:field="*{password}" required/></td>
+            </tr>
+<!--            <tr>-->
+<!--                <td>Confirm password:</td>-->
+<!--                <td><input type="text" th:field="*{confirmpassword}" required/></td>-->
+<!--            </tr>-->
+
+        </table>
+
+        </br>
+
+        <tr>
+            <td colspan="2"><button type="submit">Register</button> </td>
+        </tr>
+
+    </form>
+</div>
+</body>
+</html>
