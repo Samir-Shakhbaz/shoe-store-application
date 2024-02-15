@@ -35,10 +35,10 @@ public class UserClient {
         ResponseEntity<User[]> response = restTemplate.getForEntity("http://user-microservice/users", User[].class);
         User[] usersArray = response.getBody(); // This will be an array of User objects.
 
-        // Convert the array to a List..
+        // Convert the array to a List...
         List<User> usersList = Arrays.asList(usersArray);
 
-        // Return the List instead of null.
+        // Return the List instead of null....
         return usersList;
     }
 
