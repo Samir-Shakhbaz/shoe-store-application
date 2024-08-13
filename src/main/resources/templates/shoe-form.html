@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${shoe != null} ? 'Edit Shoe Entry' : 'Create New Shoe Entry'">Shoe Form</title>
+  <div th:replace="fragments :: header"/>
+</head>
+<body style="background-color:#EDF1FF">
+<div th:replace="fragments :: navigation"></div>
+<div align="center">
+  <h2 th:text="${shoe != null} ? 'Edit Shoe' : 'Add New Shoe'">Shoe Form</h2>
+  <form th:action="${shoe != null} ? @{/shoe-list/update/{shoeId}} : @{/create-shoe}" method="post">
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+    <input type="hidden" name="shoeId" th:if="${shoe != null}" th:value="${shoe.shoeId}" />
+    <div class="form-group">
+      <label for="make">Make:</label>
+      <input type="text" class="form-control" id="make" name="make" th:value="${shoe != null} ? ${shoe.make} : ''" required>
+    </div>
+    <div class="form-group">
+      <label for="size">Size:</label>
+      <input type="number" class="form-control" id="size" name="size" step="any" th:value="${shoe != null} ? ${shoe.size} : ''" required>
+    </div>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea class="form-control" id="description" name="description" required th:text="${shoe != null} ? ${shoe.description} : ''"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="price">Price:</label>
+      <input type="number" class="form-control" id="price" name="price" step="0.01" th:value="${shoe != null} ? ${shoe.price} : ''" required>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary" th:text="${shoe != null} ? 'Update Shoe' : 'Add Shoe'">Submit</button>
+    </div>
+  </form>
+</div>
+</body>
+</html>

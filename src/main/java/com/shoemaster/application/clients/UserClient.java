@@ -4,8 +4,10 @@ import com.shoemaster.application.dtos.Shoe;
 import com.shoemaster.application.dtos.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -26,9 +28,22 @@ public class UserClient {
 //    }
 
     public User getByUsername(String username) {
-        ResponseEntity <User> response = restTemplate.getForEntity("http://user-microservice/users/username/" + username, User.class);
-        User user = response.getBody(); // This will be an array of User objects.
-        return user;
+        try {
+            ResponseEntity<User> response = restTemplate.getForEntity("http://user-microservice/users/username/" + username, User.class);
+//            if (response.getStatusCode() == HttpStatusCode.valueOf(404)) {
+//                return null;
+//            }
+            return response.getBody(); // This will be an array of User objects.
+
+        }
+        catch(HttpClientErrorException e) {
+            if(e.getStatusCode() == HttpStatusCode.valueOf(404)){
+                return null;
+            }
+            throw e;
+        }
+
+
     }
 
     public List<User> getAllUsers() {
@@ -44,10 +59,12 @@ public class UserClient {
 
     public User createClientNewUser(User user){
 
-        ResponseEntity<User> response = restTemplate.postForEntity("http://user-microservice/users/register", user, User.class);
+        ResponseEntity<User> response = restTemplate.postForEntity("http://user-microservice/users/create-account", user, User.class);
        return response.getBody();
     }
 
-
-
+    public void deleteById(Long userId) {
+        String url = "http://user-microservice/users/delete/" + userId;
+        restTemplate.delete(url);
+    }
 }

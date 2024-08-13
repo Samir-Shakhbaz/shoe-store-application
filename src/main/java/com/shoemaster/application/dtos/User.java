@@ -15,13 +15,15 @@ public class User implements UserDetails {
 
     private String password;
 
-    private boolean accountNonExpired;
+    private String email;
 
-    private boolean accountNonLocked;
+    private boolean accountNonExpired = true;
 
-    private boolean credentialsNonExpired;
+    private boolean accountNonLocked = true;
 
-    private boolean enabled;
+    private boolean credentialsNonExpired = true;
+
+    private boolean enabled = true;
 
     private List<Roles> roles;
 

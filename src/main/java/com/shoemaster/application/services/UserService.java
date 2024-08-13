@@ -73,4 +73,7 @@ public class UserService implements UserDetailsService {
 
     }
 
+    public void deleteById(Long userId){
+        userClient.deleteById(userId);
+    }
 }

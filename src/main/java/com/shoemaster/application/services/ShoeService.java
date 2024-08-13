@@ -13,6 +13,7 @@ public class ShoeService {
     @Autowired
     private ShoeClient shoeClient;
 
+
     public List<Shoe> getAllShoes(){
 
         return shoeClient.getAllShoes();
@@ -25,4 +26,12 @@ public class ShoeService {
 
 
     public Shoe findById(Long shoeId) {return shoeClient.getShoeById(shoeId);}
+
+    public void deleteById(Long shoeId){
+        shoeClient.deleteById(shoeId);
     }
+
+    public void updateShoe(Long shoeId, Shoe updatedShoe) {
+        shoeClient.updateById(shoeId, updatedShoe);
+    }
+}

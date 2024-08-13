@@ -3,17 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Create New Shoe Entry</title>
-  <!-- Add your existing CSS or Bootstrap links here -->
   <div th:replace="fragments :: header"/>
 </head>
-
 <body style="background-color:#EDF1FF">
-
 <div th:replace="fragments :: navigation"></div>
-
 <div align="center">
   <h2>Add New Shoe</h2>
-
   <form action="/create-shoe" method="post">
     <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
     <div class="form-group">
@@ -29,10 +24,13 @@
       <textarea class="form-control" id="description" name="description" required></textarea>
     </div>
     <div class="form-group">
+      <label for="price">Price:</label>
+      <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+    </div>
+    <div class="form-group">
       <button type="submit" class="btn btn-primary">Add Shoe</button>
     </div>
   </form>
 </div>
-
 </body>
 </html>

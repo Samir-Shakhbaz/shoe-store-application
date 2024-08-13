@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    <!-- Replace YOUR_SANDBOX_CLIENT_ID with your actual PayPal Sandbox Client ID -->
+    <script src="https://www.paypal.com/sdk/js?client-id=Ad1QCiGp5vEBInYKK13kphR_PEdOOyYzVOYpzJVFOII5TPxgRtfkGVle6pi1FJLyf8bmQat8-YIxYgbE"></script>
+    <div th:replace="fragments :: header"/>
+</head>
+
+<body style="background-color:#EDF1FF">
+
+<div th:replace="fragments :: navigation"></div>
+
+<div align="center">
+    <div class="container">
+        <h1>Checkout</h1>
+        <h2>Total: $<span th:text="${totalAmount}"></span></h2> <!-- Display the total amount -->
+        <!-- PayPal Button Container -->
+        <div id="paypal-button-container"></div>
+
+        <script>
+            var totalAmount = /*[[${totalAmount}]]*/ '0.00'; // Thymeleaf expression to get the total amount
+            paypal.Buttons({
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: totalAmount // Use dynamic value based on the cart total
+                            }
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        alert('Transaction completed by ' + details.payer.name.given_name);
+                        window.location.href = '/payment-success'; // Redirect to a success page
+                    });
+                }
+            }).render('#paypal-button-container');
+        </script>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>

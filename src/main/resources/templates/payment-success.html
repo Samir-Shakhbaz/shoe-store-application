@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Success</title>
+    <div th:replace="fragments :: header"/>
+</head>
+<body style="background-color:#EDF1FF">
+<div th:replace="fragments :: navigation"></div>
+<div align="center">
+    <div class="container">
+        <h1>Payment Success</h1>
+        <p th:text="${message}"></p>
+        <a th:href="@{/}" class="btn btn-primary">Continue Shopping</a>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>

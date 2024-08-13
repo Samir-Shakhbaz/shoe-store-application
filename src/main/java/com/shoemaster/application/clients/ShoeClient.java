@@ -3,6 +3,8 @@ package com.shoemaster.application.clients;
 import com.shoemaster.application.dtos.Shoe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -51,4 +53,15 @@ public class ShoeClient {
         return null; // Return null or throw an exception if the shoe is not found
     }
 
+    public void deleteById(Long shoeId) {
+        String url = "http://shoe-microservice/shoes/delete/" + shoeId;
+        restTemplate.delete(url);
+    }
+
+    public void updateById(Long shoeId, Shoe updatedShoe) {
+        String url = "http://shoe-microservice/shoes/update/" + shoeId;
+        HttpEntity<Shoe> requestUpdate = new HttpEntity<>(updatedShoe);
+        ResponseEntity<Shoe> response = restTemplate.exchange(url, HttpMethod.PUT, requestUpdate, Shoe.class);
+        response.getBody();
+    }
 }

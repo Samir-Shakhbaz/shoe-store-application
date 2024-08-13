@@ -4,12 +4,10 @@ import lombok.Data;
 
 @Data
 public class Shoe {
-
-    long shoeId;
-
-    String make;
-    Float size;
-    String description;
-
-
+    private Long shoeId;
+    private String make;
+    private Float size;
+    private String description;
+    private Double price;
+    private int quantity;
 }

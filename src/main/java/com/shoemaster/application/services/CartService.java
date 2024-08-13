@@ -12,15 +12,15 @@ public class CartService {
     @Autowired
     CartClient cartClient;
 
-    public Cart getByUsername(String username) {
-        return cartClient.getByUserName(username);
+    public Cart getByUserId(Long userId) {
+        return cartClient.getByUserId(userId);
     }
 
     public Cart addShoeToCart(Long userId, Shoe shoe) {return cartClient.addShoeToCart(userId, shoe);
     }
 
-    public Cart removeShoeFromCart(String username, Long shoeId) {
-        return cartClient.removeShoeFromCart(username, shoeId);
+    public Cart removeShoeFromCart(Long userId, Long cartItemId, Integer amount) {
+        return cartClient.removeShoeFromCart(userId, cartItemId, amount);
     }
 
 }

@@ -26,15 +26,20 @@ public class SecurityConfig {
                 // Configuring endpoint access
                 .authorizeHttpRequests((requests) -> requests
                         // Allow access to the root URL for registration
-                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/", "/login", "/create-account", "/shoe-list", "/shoe-list/delete",
+                                "/shoe-list/edit/{shoeId}", "/shoe-list/edit/**", "/error", "/user-list",
+                                "/user-list/delete/**", "/shoe-list/update/**").permitAll()
                         // Configure other URL access rules
-                        .requestMatchers("/register", "/login","/error").permitAll()
-                        .requestMatchers("/carts").permitAll()
+                        .requestMatchers("/home").permitAll()
+                        .requestMatchers("/create-shoe").permitAll()
+//                        .requestMatchers("/carts").permitAll()
+                        .requestMatchers("/user-list/delete/*").permitAll()
                         .requestMatchers("/users").hasAnyAuthority("USER")
+//                        .requestMatchers("/shoe-list").hasAnyAuthority("USER", "ADMIN")
                         .requestMatchers("/secure", "/registered").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
-                // Configuring form login
+////                 Configuring form login
 //                .formLogin(form -> form
 //                        .loginPage("/login")  // Assuming '/login' is your actual login page URL
 //                        .defaultSuccessUrl("/user-dashboard", true) // Change to your dashboard URL
@@ -45,6 +50,7 @@ public class SecurityConfig {
                                 .defaultSuccessUrl("/user-list", true) // Set the default success URL here
                                 .failureUrl("/login?error=true") // Optional: set a failure URL
                         // You can omit loginPage() and loginProcessingUrl() if using default
+                        .permitAll()
                 )
 
                 // Logout configuration

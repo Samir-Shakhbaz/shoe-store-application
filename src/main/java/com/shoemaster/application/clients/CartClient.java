@@ -5,9 +5,12 @@ import com.shoemaster.application.dtos.Shoe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Map;
 
 @Component
 public class CartClient {
@@ -15,8 +18,8 @@ public class CartClient {
     @LoadBalanced
     RestTemplate restTemplate;
 
-    public Cart getByUserName(String username) {
-        ResponseEntity<Cart> response = restTemplate.getForEntity("http://cart-microservice/carts/" + username, Cart.class);
+    public Cart getByUserId(Long userId) {
+        ResponseEntity<Cart> response = restTemplate.getForEntity("http://cart-microservice/carts/" + userId, Cart.class);
         Cart cart = response.getBody(); // This will be an array of User objects.
         return cart;
     }
@@ -27,9 +30,15 @@ public class CartClient {
         return response.getBody();
     }
 
-    public Cart removeShoeFromCart(String username, Long shoeId) {
+    public Cart removeShoeFromCart(Long userId, Long cartItemId, Integer amount) {
 
-        ResponseEntity<Cart> response = restTemplate.postForEntity("http://cart-microservice/carts/" + username + "/shoes/remove", shoeId, Cart.class);
+        ResponseEntity<Cart> response = restTemplate.exchange(
+                "http://cart-microservice/carts/" + userId + "/" + cartItemId,
+                HttpMethod.PATCH,
+                null,
+                Cart.class,
+                Map.of("amount", amount));
+
 
         return response.getBody();
     }
