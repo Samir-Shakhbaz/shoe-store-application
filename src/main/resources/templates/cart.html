@@ -32,14 +32,22 @@
                 <td th:text="${userCartItem.user.username}"></td>
                 <td>
                     <div class="btn-group" role="group">
-                        <form th:action="@{/cart/add}" method="post" style="display: inline;">
-                            <input type="hidden" name="shoeId" th:value="${userCartItem.shoe.shoeId}" />
+                        <form th:action="@{/cart/update}" method="post" style="display: inline;">
+                            <input type="hidden" name="cartItemId" th:value="${userCartItem.cartItemId}" />
+                            <input type="hidden" name="amount" th:value="${userCartItem.amount + 1}" />
                             <button type="submit" class="btn btn-primary btn-sm">Add</button>
                         </form>
-                        <form th:action="@{/cart/remove}" method="post" style="display: inline;">
-                            <input type="hidden" name="shoeId" th:value="${userCartItem.shoe.shoeId}" />
+                        <form th:action="@{/cart/update}" method="post" style="display: inline;">
+                            <input type="hidden" name="cartItemId" th:value="${userCartItem.cartItemId}" />
+                            <input type="hidden" name="amount" th:value="${userCartItem.amount + 10}" />
+                            <button type="submit" class="btn btn-primary btn-sm">Add+10</button>
+                        </form>
+                        <form th:action="@{/cart/update}" method="POST" style="display: inline;">
+                            <input type="hidden" name="cartItemId" th:value="${userCartItem.cartItemId}" />
+                            <input type="hidden" name="amount" th:value="${userCartItem.amount - 1}" />
                             <button type="submit" class="btn btn-danger btn-sm">Remove</button>
                         </form>
+
                     </div>
                 </td>
             </tr>

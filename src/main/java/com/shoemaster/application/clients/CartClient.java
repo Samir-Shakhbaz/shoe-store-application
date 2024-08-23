@@ -32,15 +32,16 @@ public class CartClient {
 
     public Cart removeShoeFromCart(Long userId, Long cartItemId, Integer amount) {
 
+        String url = "http://cart-microservice/carts/" + userId + "/" + cartItemId + "?amount=" + amount;
+
         ResponseEntity<Cart> response = restTemplate.exchange(
-                "http://cart-microservice/carts/" + userId + "/" + cartItemId,
+                url,
                 HttpMethod.PATCH,
                 null,
-                Cart.class,
-                Map.of("amount", amount));
-
+                Cart.class);
 
         return response.getBody();
     }
+
 
 }

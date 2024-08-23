@@ -87,7 +87,7 @@ public class CartController {
             for (CartItem cartItem : cart.getShoes()) {
                 Shoe shoe = shoeService.findById(cartItem.getShoeId());
                 int amount = cartItem.getAmount();
-                UserCartItem userCartItem = new UserCartItem(user, shoe, amount);
+                UserCartItem userCartItem = new UserCartItem(user, shoe, amount, cartItem.getId());
                 userCartItems.add(userCartItem);
                 totalPrice += shoe.getPrice() * amount;
             }
@@ -101,23 +101,30 @@ public class CartController {
 
 
 
-    @PostMapping("/cart/add")
-    public String addToShoeList(@RequestParam("shoeId") Long shoeId, HttpSession session, Authentication authentication) {
-        User user = (User)authentication.getPrincipal();
+//    @PostMapping("/cart/add")
+//    public String addToShoeList(@RequestParam("shoeId") Long shoeId, HttpSession session, Authentication authentication) {
+//        User user = (User)authentication.getPrincipal();
+//
+//        Shoe shoe = shoeService.findById(shoeId);
+//        Cart cart = cartService.addShoeToCart(user.getUserId(), shoe);
+//
+//        return "redirect:/cart";
+//    }
 
-        Shoe shoe = shoeService.findById(shoeId);
-        Cart cart = cartService.addShoeToCart(user.getUserId(), shoe);
+    @PostMapping("/cart/update")
+    public String removeFromCart(Authentication authentication,
+                                 @RequestParam("cartItemId") Long cartItemId,
+                                 @RequestParam Integer amount) {
+
+        System.out.println("cartItemId: " + cartItemId + ", amount: " + amount);
+
+        User user = (User)authentication.getPrincipal();
+        Cart cart = cartService.removeShoeFromCart(user.getUserId(), cartItemId, amount);
 
         return "redirect:/cart";
     }
 
-    @PostMapping("/cart/remove")
-    public String removeFromCart(@RequestParam("cartItemId") Long cartItemId, Authentication authentication) {
-        User user = (User)authentication.getPrincipal();
-        Cart cart = cartService.removeShoeFromCart(user.getUserId(), cartItemId);
 
-        return "redirect:/cart";
-    }
 
     @SuppressWarnings("unchecked")
     private <T> List<T> getSessionAttribute(HttpSession session, String name, Class<T> type) {

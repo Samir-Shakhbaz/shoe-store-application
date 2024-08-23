@@ -13,4 +13,5 @@ public class UserCartItem {
     private User user;
     private Shoe shoe;
     private int amount;
+    private Long cartItemId;
 }
