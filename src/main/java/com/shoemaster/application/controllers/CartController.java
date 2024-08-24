@@ -91,6 +91,7 @@ public class CartController {
                 userCartItems.add(userCartItem);
                 totalPrice += shoe.getPrice() * amount;
             }
+
         }
 
         String formattedTotalPrice = String.format("%.2f", totalPrice);
@@ -99,7 +100,11 @@ public class CartController {
         return "cart";
     }
 
-
+    @PostMapping("/cart/delete")
+    public String deleteCartItem(@RequestParam("cartItemId") Long cartItemId) {
+        cartService.deleteById(cartItemId);
+        return "redirect:/cart";
+    }
 
 //    @PostMapping("/cart/add")
 //    public String addToShoeList(@RequestParam("shoeId") Long shoeId, HttpSession session, Authentication authentication) {
@@ -111,19 +116,37 @@ public class CartController {
 //        return "redirect:/cart";
 //    }
 
-    @PostMapping("/cart/update")
-    public String removeFromCart(Authentication authentication,
-                                 @RequestParam("cartItemId") Long cartItemId,
-                                 @RequestParam Integer amount) {
+//    @PostMapping("/cart/update")
+//    public String removeFromCart(Authentication authentication,
+//                                 @RequestParam("cartItemId") Long cartItemId,
+//                                 @RequestParam Integer amount) {
+//
+//        System.out.println("cartItemId: " + cartItemId + ", amount: " + amount);
+//
+//        User user = (User)authentication.getPrincipal();
+//        Cart cart = cartService.removeShoeFromCart(user.getUserId(), cartItemId, amount);
+//
+//        return "redirect:/cart";
+//    }
 
-        System.out.println("cartItemId: " + cartItemId + ", amount: " + amount);
+    @PostMapping("/cart/update")
+    public String updateCartItem(
+            @RequestParam ("cartItemId") Long cartItemId,
+            @RequestParam boolean increase,
+            Authentication authentication) {
 
         User user = (User)authentication.getPrincipal();
-        Cart cart = cartService.removeShoeFromCart(user.getUserId(), cartItemId, amount);
+        // Retrieve the cart for the user
+        Cart cart = cartService.getByUserId(user.getUserId());
 
+        // Update the cart item quantity
+        if (cart != null) {
+            cartService.updateCartItemQuantity(user.getUserId(), cartItemId, increase);
+        }
+
+        // Redirect to the cart view or update the model accordingly
         return "redirect:/cart";
     }
-
 
 
     @SuppressWarnings("unchecked")

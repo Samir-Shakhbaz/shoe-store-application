@@ -2,15 +2,13 @@ package com.shoemaster.application.clients;
 
 import com.shoemaster.application.dtos.Cart;
 import com.shoemaster.application.dtos.Shoe;
+import com.shoemaster.application.dtos.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Map;
 
 @Component
 public class CartClient {
@@ -43,5 +41,22 @@ public class CartClient {
         return response.getBody();
     }
 
+    public Cart updateCartItemQuantity(Long userId, Long cartItemId, boolean increase) {
+        String url = "http://cart-microservice/carts/" + userId + "/" + cartItemId + "?increase=" + increase;
+
+        ResponseEntity<Cart> response = restTemplate.exchange(
+                url,
+                HttpMethod.PATCH,
+                null,
+                Cart.class);
+
+        return response.getBody();
+
+    }
+
+    public void deleteById(Long cartItemId) {
+        String url = "http://cart-microservice/carts/delete/" + cartItemId;
+        restTemplate.delete(url);
+    }
 
 }

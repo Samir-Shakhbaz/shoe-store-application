@@ -11,4 +11,6 @@ public class CartItem {
 
     private Integer amount;
 
+    private boolean increase;
+
 }
