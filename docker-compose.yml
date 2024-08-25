@@ -1,0 +1,13 @@
+services:
+  db:
+    image: mysql:8.3.0
+    ports:
+      - "3366:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: shoe-master
+      MYSQL_USER: myUser
+      MYSQL_PASSWORD: myPass
+    volumes:
+      - ./data:/var/lib/mysql
+
