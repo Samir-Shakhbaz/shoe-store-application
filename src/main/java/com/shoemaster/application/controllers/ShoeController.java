@@ -36,7 +36,7 @@ public class ShoeController {
 
     @GetMapping("/shoe-list")
     public String viewShoeList(HttpSession session, Model model) {
-        List<Shoe> shoes = shoeService.getAllShoes(); // Assuming you have a method to get all shoes
+        List<Shoe> shoes = shoeService.getAllShoes();
         List<Shoe> cart = getSessionAttribute(session, "cart", Shoe.class);
 
         // Update the shoe list with the quantities in the cart
@@ -49,7 +49,7 @@ public class ShoeController {
         }
 
         model.addAttribute("shoes", shoes);
-        return "shoe-list"; // Name of the Thymeleaf template for the shoe list
+        return "shoe-list";
     }
 
     @SuppressWarnings("unchecked")

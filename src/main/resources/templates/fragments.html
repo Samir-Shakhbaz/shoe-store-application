@@ -27,6 +27,9 @@
                 <li><a th:href="@{/create-shoe}">New Shoe</a></li>
                 <li><a th:href="@{/user-list}">User List</a></li>
 <!--                <li sec:authorize="hasRole('USER')"><a th:href="@{/create-shoe}" class="link-dark">New Shoe</a></li>-->
+                <li sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}" class="btn btn-primary" style="color: white; background-color: #007bff; border: none;">Login</a>
+                </li>
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}" class="link-dark">Log out</a></li>
                 <li sec:authorize="!isAuthenticated()"><a th:href="@{/create-account}">Register</a></li>
 <!--                <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Login</a></li>-->
@@ -43,7 +46,7 @@
                         <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
                     </div>
                 </li>
-                <li><a th:href="@{/cart}" class="btn btn-primary">Cart</a></li>
+                <li><a th:href="@{/cart}" class="btn btn-primary" style="color: white; background-color: #007bff; border: none;">Cart</a></li>
             </ul>
         </div>
     </nav>
