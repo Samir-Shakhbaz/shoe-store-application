@@ -43,7 +43,7 @@
                 <li sec:authorize="isAuthenticated()">
                     <div>
                         <span sec:authentication="name">Bob</span>
-                        <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
+                        <span sec:authentication="principal.authorities"></span>
                     </div>
                 </li>
                 <li><a th:href="@{/cart}" class="btn btn-primary" style="color: white; background-color: #007bff; border: none;">Cart</a></li>

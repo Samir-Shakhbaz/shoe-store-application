@@ -26,18 +26,17 @@ public class SecurityConfig {
                 // Configuring endpoint access
                 .authorizeHttpRequests((requests) -> requests
                         // Allow access to the root URL for registration
-                        .requestMatchers("/", "/login", "/create-account", "/shoe-list", "/shoe-list/delete",
-                                "/shoe-list/edit/{shoeId}", "/shoe-list/edit/**", "/error", "/user-list",
-                                "/user-list/delete/**", "/shoe-list/update/**").permitAll()
+                        .requestMatchers("/", "/login", "/create-account", "/shoe-list", "/error").permitAll()
+
+//                                .requestMatchers("/cart").hasAnyAuthority("USER", "ADMIN")
                         // Configure other URL access rules
-                        .requestMatchers("/home").permitAll()
                         .requestMatchers("/create-shoe").permitAll()
 //                        .requestMatchers("/carts").permitAll()
                         .requestMatchers("/user-list/delete/*").permitAll()
                         .requestMatchers("/users").hasAnyAuthority("USER")
 //                        .requestMatchers("/shoe-list").hasAnyAuthority("USER", "ADMIN")
                         .requestMatchers("/secure", "/registered").hasAnyAuthority("ADMIN")
-                        .anyRequest().authenticated()
+                                .anyRequest().authenticated()
                 )
 ////                 Configuring form login
 //                .formLogin(form -> form
